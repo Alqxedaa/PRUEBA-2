@@ -1,19 +1,11 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>SECCION DOCENTE</ion-title>
-    <ion-buttons slot="start"></ion-buttons>
-      <ion-button [routerLink]="['/home']">
-        <ion-icon slot="icon-only" name="home"></ion-icon>
-      </ion-button>
-    <ion-title>Secciones</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content>
-  <h2>BIENVENIDO, {{nombre}}</h2>
+  <h2>BIENVENIDO:  {{nombre}}</h2>
   <ion-list>
     <ion-item *ngFor="let seccion of secciones" button [routerLink]="link">
       <ion-label>{{ seccion }}</ion-label>
     </ion-item>
   </ion-list>
+  <app-footer></app-footer>
 </ion-content>

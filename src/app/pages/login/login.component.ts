@@ -44,12 +44,12 @@ export class LoginComponent  implements OnInit {
           if (usuarioCompleto.rol === "docente") {
             this.usuario = ''; // Limpiar el campo de usuario
             this.clave = ''; // Limpiar el campo de clave
-            this.router.navigate(['/docente']); // Redirigir al usuario docente si el login es exitoso
+            this.router.navigate(['/seccion-docente']); // Redirigir al usuario docente si el login es exitoso
           }
           else{
             this.usuario = ''; // Limpiar el campo de usuario
             this.clave = ''; // Limpiar el campo de clave
-            this.router.navigate(['/alumno']); // Redirigir al usuario alumno si el login es exitoso
+            this.router.navigate(['/seccion-alumno']); // Redirigir al usuario alumno si el login es exitoso
           }
 
         } else {

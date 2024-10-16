@@ -1,7 +1,36 @@
-.custom-header {
-  --background: #ffffff; /* Fondo blanco para el header */
-  --color: #333333;      /* Color del texto del header */
-  --border-bottom: 1px solid #e0e0e0; /* Línea sutil en la parte inferior */
-  padding: 10px;         /* Espaciado interno */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para un efecto elevado */
+.cabecera {
+  background-color: #f8f9fa; // Color de fondo claro
+  padding: 10px 20px; // Espaciado alrededor del contenido
+  display: flex; // Usar flexbox para alinear elementos
+  justify-content: space-between; // Espacio entre el título y los enlaces
+  align-items: center; // Centrar verticalmente los elementos
+  border-bottom: 1px solid #e0e0e0; // Línea en la parte inferior
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra sutil para dar profundidad
+
+  h1 {
+    font-size: 1.5rem; // Tamaño de fuente más pequeño
+    margin: 0; // Sin margen
+    color: #343a40; // Color del texto
+  }
+
+  p {
+    margin: 0; // Sin margen
+    font-size: 1rem; // Tamaño de fuente para el texto adicional
+    color: #495057; // Color del texto adicional
+  }
+
+  a {
+    text-decoration: none; // Sin subrayado en los enlaces
+    color: #007bff; // Color del enlace
+    transition: color 0.3s; // Transición suave para el color
+
+    &:hover {
+      color: #0056b3; // Color del enlace al pasar el mouse
+    }
+  }
+}
+
+// Estilos para cuando el usuario está logueado
+.iniciado {
+  background-color: #e9ecef; // Color de fondo diferente cuando el usuario está logueado
 }

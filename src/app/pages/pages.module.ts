@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -34,7 +35,8 @@ import { LogoutComponent } from './logout/logout.component';
     SharedModule,
     IonicModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class PagesModule { }

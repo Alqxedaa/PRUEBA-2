@@ -1,8 +1,18 @@
-<div class="cabecera" [ngClass]="{'iniciado': usuario!==''}">
-  <h1>APP DUOC</h1>
-  @if (usuario!==''){
+<div class="cabecera" [ngClass]="{'iniciado': usuario !== ''}">
+  <h1>APP</h1>
+  <ng-container *ngIf="usuario !== ''">
     <p>
       Usuario: {{usuario}} - {{usuarioCompleto.rol}}
     </p>
-  }
+    <p><a (click)="logout()">Logout</a></p> <!-- Llamar al método logout -->
+    <ng-container *ngIf="usuarioCompleto.rol === 'docente'">
+      <p><a [routerLink]="['/seccion-docente']">Docente</a></p>
+    </ng-container>
+    <ng-container *ngIf="usuarioCompleto.rol !== 'docente'">
+      <p><a [routerLink]="['/seccion-alumno']">Alumno</a></p>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="usuario === ''">
+    <p><a [routerLink]="['/login']">Login</a></p>
+  </ng-container>
 </div>

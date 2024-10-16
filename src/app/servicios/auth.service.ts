@@ -1,50 +1,71 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { WebService } from './web.service';
-import { UsuarioAPI } from '../models/UsuarioAPI.models';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { WebService } from './web.service'; // Asegúrate de que WebService está bien implementado.
+import { UsuarioAPI } from '../models/UsuarioAPI.models'; // Verifica que el modelo UsuarioAPI tenga las propiedades correctas.
+import { Router } from '@angular/router'; // Asegúrate de importar Router
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  // BehaviorSubjects para manejar el estado del usuario y la autenticación
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  //para mostrar el estado del login
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false); // Para mostrar el estado del login
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable(); // Para mostrar el estado del login
+  private usuarioSubject = new BehaviorSubject<string>('');
+  usuario$ = this.usuarioSubject.asObservable();
 
-  private usuarioSubject = new BehaviorSubject<string>(''); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
-  usuario$ = this.usuarioSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
+  private usuarioCompletoSubject = new BehaviorSubject<UsuarioAPI | null>(null);
+  usuarioCompleto$ = this.usuarioCompletoSubject.asObservable();
 
-  // utiliza un tipo UsuarioAPI de models/UsuarioAPI.models.ts
-  private usuarioCompletoSubject = new BehaviorSubject<UsuarioAPI>(null); // Para mostrar el nombre del usuario actualmente logueado  // Para mostrar el nombre del usuario
-  usuarioCompleto$ = this.usuarioCompletoSubject.asObservable(); // Para mostrar el nombre del usuario actualmente logueado
+  private loginFailedSubject = new BehaviorSubject<boolean>(false);
+  loginFailed$ = this.loginFailedSubject.asObservable();
 
-  // Agregar un BehaviorSubject para el estado de loginFailed
-  private loginFailedSubject = new BehaviorSubject<boolean>(false); // Para mostrar si falló la autenticación
-  loginFailed$ = this.loginFailedSubject.asObservable(); // Para mostrar si falló la autenticación
+  webservice = inject(WebService); // Inyecta el servicio web para hacer llamadas a la API
+  private router = inject(Router); // Inyecta Router para redireccionar
 
-  webservice = inject(WebService); // Obtener el servicio de webService
-  async buscarBD4(usuario: string, clave: string){
-    const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users'
-    const res = await this.webservice.request('GET', url, 'users') as Array<UsuarioAPI>; // utiliza un tipo UsuarioAPI de models/UsuarioAPI.models.ts
+  // Método para buscar en la base de datos de usuarios
+  async buscarBD4(usuario: string, clave: string): Promise<void> {
+    const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users';
 
-    const user = res.find(u => u.user === usuario && u.pass === clave); // Buscar un usuario en la lista de usuarios de la API
-    if (user) {
-      console.log('Autenticación exitosa!');  // Autenticación exitosa!
-      console.log(user);  // Nombre completo: Hel
-      this.isAuthenticatedSubject.next(true); // Activar el estado de autenticación si la autenticación es correcta.
-      this.usuarioSubject.next(user.name); // Actualizar el nombre completo del usuario autenticado.
-      this.usuarioCompletoSubject.next(user); // Actualizar el usuario completo como objeto del usuario autenticado.
-      this.loginFailedSubject.next(false); // Restablecer loginFailed a false
-    } else {
-      this.isAuthenticatedSubject.next(false); // Desactivar el estado de autenticación si la autenticación es incorrecta.
-      this.loginFailedSubject.next(true); // Establecer loginFailed a true si falla la autenticación
+    try {
+      // Realiza la solicitud GET a la API sin duplicar 'users'
+      const res = await this.webservice.request('GET', url, '', null) as Array<UsuarioAPI>;
+
+      // Busca el usuario con las credenciales correctas
+      const user = res.find(u => u.user === usuario && u.pass === clave);
+
+      if (user) {
+        console.log('Autenticación exitosa!', user);
+        this.isAuthenticatedSubject.next(true);
+        this.usuarioSubject.next(user.name);
+        this.usuarioCompletoSubject.next(user);
+        this.loginFailedSubject.next(false);
+
+        // Redirige según el tipo de usuario
+        // Redirige según el tipo de usuario
+        if (user.rol === 'docente') {
+          this.router.navigate(['/seccion-docente']); // Redirige a sección docente
+        } else if (user.rol === 'alumno') {
+          this.router.navigate(['/seccion-alumno']); // Redirige a sección alumno
+        }
+
+      } else {
+        console.warn('Credenciales incorrectas');
+        this.isAuthenticatedSubject.next(false);
+        this.loginFailedSubject.next(true);
+      }
+
+    } catch (error) {
+      console.error('Error al buscar el usuario:', error);
+      this.isAuthenticatedSubject.next(false);
+      this.loginFailedSubject.next(true);
     }
   }
 
-  async registrarNuevoUsuario(usuario: any) {
+  // Método para registrar un nuevo usuario
+  async registrarNuevoUsuario(usuario: UsuarioAPI): Promise<UsuarioAPI | void> {
     const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users';
     try {
       // Verifica si el usuario ya existe antes de registrarlo
@@ -52,40 +73,41 @@ export class AuthService {
       const usuarioExistente = usuariosExistentes.find(u => u.user === usuario.user);
 
       if (usuarioExistente) {
-        throw new Error('El usuario ya existe');
+        throw new Error('El usuario ya existe'); // Lanza un error si el usuario ya existe
       }
 
-      const res = await this.webservice.request('POST', url, 'users', usuario);
-      console.log('Usuario registrado con éxito', res);
-      return res; // Devuelve la respuesta exitosa del registro
+      const res = await this.webservice.request('POST', url, '', usuario) as UsuarioAPI; // Asegúrate de que el tipo sea UsuarioAPI
+      console.log('Usuario registrado con éxito:', res);
+      return res; // Devuelve el resultado del registro
     } catch (error) {
       console.error('Error al registrar usuario:', error);
       throw error; // Propaga el error para manejarlo en el componente
     }
   }
 
-    // Método para verificar si el usuario ya existe
-    async obtenerUsuarios(): Promise<UsuarioAPI[]> {
-      const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users';
-      try {
-        const res = await this.webservice.request('GET', url, 'users') as Array<UsuarioAPI>;
-        return res; // Devuelve la lista de usuarios existentes
-      } catch (error) {
-        console.error('Error al obtener usuarios:', error);
-        throw error; // Manejo del error
-      }
+  // Método para obtener todos los usuarios desde la API
+  async obtenerUsuarios(): Promise<UsuarioAPI[]> {
+    const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users';
+    try {
+      const res = await this.webservice.request('GET', url, '', null) as Array<UsuarioAPI>;
+      return res; // Devuelve la lista de usuarios existentes
+    } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+      throw error;
     }
+  }
 
-
+  // Método para cerrar sesión
   logout(): void {
-    this.usuarioSubject.next('');  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  // Resetear el nombre de usuario al desloguearse.  //
+    this.usuarioSubject.next('');
     this.usuarioCompletoSubject.next(null);
-    this.isAuthenticatedSubject.next(false); // Desloguearse y desactivar el estado de autenticación.  // Desloguearse y
-    this.loginFailedSubject.next(false);  // Restablecer loginFailed al cerrar sesión
+    this.isAuthenticatedSubject.next(false);
+    this.loginFailedSubject.next(false);
+    console.log('Usuario deslogueado');
   }
 
-  isLoggedIn() {
-    return this.isAuthenticated$; // Retornar el estado de autenticación
+  // Método para comprobar si el usuario está autenticado
+  isLoggedIn(): Observable<boolean> {
+    return this.isAuthenticated$; // Devuelve el observable con el estado de autenticación
   }
-
 }

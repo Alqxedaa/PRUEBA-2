@@ -1,3 +1,5 @@
+/* login.component.scss */
+
 .login-content {
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@
 .form-container {
   width: 100%;
   max-width: 400px; /* Ancho máximo del formulario */
-  margin: auto; /* Centra el formulario */
+  margin: 40px auto; /* Centra el formulario y agrega margen superior */
   padding: 16px; /* Padding interno del contenedor */
   background-color: white; /* Fondo blanco para el formulario */
   border-radius: 8px; /* Bordes redondeados */
@@ -21,26 +23,26 @@
   font-size: 24px; /* Tamaño de fuente del título */
   margin-bottom: 20px; /* Espaciado inferior */
   color: #3880ff; /* Color del título */
-  text-align: center; /* Centra el texto del título */
-}
+  text-align: center;
 
 .form-item {
-  margin-bottom: 16px; /* Espaciado entre los elementos del formulario */
+  margin-bottom: 16px;
 }
 
 .login-button {
-  margin-top: 20px; /* Espaciado superior */
-  background-color: #3880ff; /* Color de fondo del botón */
-  color: white; /* Color del texto del botón */
+  margin-top: 20px;
+  background-color: #3880ff;
+  color: white;
 }
 
 .error-message {
-  margin-top: 10px; /* Espaciado superior */
-  font-weight: bold; /* Negrita para el mensaje de error */
-  text-align: center; /* Centra el mensaje de error */
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .register-item {
-  margin-top: 20px; /* Espaciado superior */
-  text-align: center; /* Centra el texto del registro */
+  margin-top: 20px;
+  text-align: center;
+}
 }
