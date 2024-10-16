@@ -1,0 +1,29 @@
+ion-header {
+  background-color: #007bff;
+  color: white;
+}
+
+ion-toolbar {
+  --background: #007bff;
+}
+
+ion-list {
+  padding: 20px;
+}
+
+ion-item {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+  transition: transform 0.2s;
+}
+
+ion-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 1);
+}
+
+ion-label {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
