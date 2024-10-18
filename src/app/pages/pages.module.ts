@@ -13,8 +13,8 @@ import { SeccionAlumnoComponent } from './seccion-alumno/seccion-alumno.componen
 import { SeccionDocenteComponent } from './seccion-docente/seccion-docente.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { QrComponent } from './qr/qr.component';
 import { LogoutComponent } from './logout/logout.component';
+import { RegistrarComponent } from './registrar/registrar.component';
 
 
 @NgModule({
@@ -26,8 +26,8 @@ import { LogoutComponent } from './logout/logout.component';
     NotfoundComponent,
     SeccionAlumnoComponent,
     SeccionDocenteComponent,
-    QrComponent,
     LogoutComponent,
+    RegistrarComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,46 @@
+.form-content {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  background-color: #f8f9fa; /* Fondo claro */
+  padding: 0 16px; /* Padding lateral para evitar que el contenido toque los bordes */
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px; /* Ancho máximo del formulario */
+  padding: 16px; /* Padding interno */
+  background-color: white; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin: auto; /* Centra el formulario horizontalmente */
+}
+
+.login-title {
+  font-size: 24px; /* Tamaño de la fuente */
+  margin-bottom: 20px; /* Espaciado inferior */
+  color: #3880ff; /* Color del título */
+  text-align: center; /* Centra el texto */
+}
+
+.form-item {
+  margin-bottom: 16px; /* Espaciado entre los campos */
+}
+
+.login-button {
+  margin-top: 20px; /* Espaciado superior */
+  background-color: #3880ff; /* Color del botón */
+  color: white; /* Color del texto */
+}
+
+.error-message {
+  margin-top: 10px; /* Espaciado superior */
+  font-weight: bold; /* Negrita para el mensaje de error */
+  text-align: center; /* Centrado */
+}
+
+.register-item {
+  margin-top: 20px; /* Espaciado superior */
+  text-align: center; /* Centrado */
+}

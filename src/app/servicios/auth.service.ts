@@ -44,11 +44,10 @@ export class AuthService {
         this.loginFailedSubject.next(false);
 
         // Redirige según el tipo de usuario
-        // Redirige según el tipo de usuario
         if (user.rol === 'docente') {
-          this.router.navigate(['/seccion-docente']); // Redirige a sección docente
+          this.router.navigate(['/seccion-docente']);
         } else if (user.rol === 'alumno') {
-          this.router.navigate(['/seccion-alumno']); // Redirige a sección alumno
+          this.router.navigate(['/seccion-alumno']);
         }
 
       } else {
@@ -73,15 +72,15 @@ export class AuthService {
       const usuarioExistente = usuariosExistentes.find(u => u.user === usuario.user);
 
       if (usuarioExistente) {
-        throw new Error('El usuario ya existe'); // Lanza un error si el usuario ya existe
+        throw new Error('El usuario ya existe');
       }
 
-      const res = await this.webservice.request('POST', url, '', usuario) as UsuarioAPI; // Asegúrate de que el tipo sea UsuarioAPI
+      const res = await this.webservice.request('POST', url, '', usuario) as UsuarioAPI;
       console.log('Usuario registrado con éxito:', res);
       return res; // Devuelve el resultado del registro
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      throw error; // Propaga el error para manejarlo en el componente
+      throw error;
     }
   }
 
@@ -90,7 +89,7 @@ export class AuthService {
     const url = 'https://670eac473e71518616557132.mockapi.io/api/v1/users';
     try {
       const res = await this.webservice.request('GET', url, '', null) as Array<UsuarioAPI>;
-      return res; // Devuelve la lista de usuarios existentes
+      return res; //lista de usuarios existentes
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
       throw error;

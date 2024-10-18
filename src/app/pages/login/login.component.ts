@@ -10,18 +10,18 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class LoginComponent  implements OnInit {
 
-  usuario: string = ''; // Campo de entrada para el usuario
-  clave: string = ''; // Campos de entrada para el usuario y clave
+  usuario: string = '';
+  clave: string = '';
 
-  private authService = inject(AuthService);  // Obtener el servicio de autenticación
-  private router = inject(Router);  // Obtener el servicio de navegación
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   private loginFailedSubject = new BehaviorSubject<boolean>(false);
   loginFailed$ = this.loginFailedSubject.asObservable();
-  loginFailed: boolean; // Variable para almacenar el estado de loginFailed
+  loginFailed: boolean;
 
   ngOnInit(): void {
-    this.authService.loginFailed$.subscribe(loginFailed => this.loginFailed = loginFailed); // Obtener el estado de loginFailed
+    this.authService.loginFailed$.subscribe(loginFailed => this.loginFailed = loginFailed);
   }
 
   constructor() {}
@@ -29,31 +29,31 @@ export class LoginComponent  implements OnInit {
   isLoading: boolean = false;
   async login(usuario: string, clave: string) {
 
-    this.isLoading = true; // Activar el estado de carga
-    await this.authService.buscarBD4(usuario, clave); // Intentar hacer login
-    this.isLoading = false; // Desactivar el estado de carga una vez que la autenticación termine
+    this.isLoading = true;
+    await this.authService.buscarBD4(usuario, clave);
+    this.isLoading = false;
 
-    // Suscribirse al observable para verificar el estado de autenticación
+
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {
 
       this.authService.usuarioCompleto$.subscribe(usuarioCompleto => {
         if (isAuthenticated) {
-          this.usuario = ''; // Limpiar el campo de usuario
-          this.clave = ''; // Limpiar el campo de clave
+          this.usuario = '';
+          this.clave = '';
 
           if (usuarioCompleto.rol === "docente") {
-            this.usuario = ''; // Limpiar el campo de usuario
-            this.clave = ''; // Limpiar el campo de clave
-            this.router.navigate(['/seccion-docente']); // Redirigir al usuario docente si el login es exitoso
+            this.usuario = '';
+            this.clave = '';
+            this.router.navigate(['/seccion-docente']);
           }
           else{
-            this.usuario = ''; // Limpiar el campo de usuario
-            this.clave = ''; // Limpiar el campo de clave
-            this.router.navigate(['/seccion-alumno']); // Redirigir al usuario alumno si el login es exitoso
+            this.usuario = '';
+            this.clave = '';
+            this.router.navigate(['/seccion-alumno']);
           }
 
         } else {
-          this.loginFailed = true; // Mostrar mensaje de error si el login falla
+          this.loginFailed = true;
         }
 
       });

@@ -1,16 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Generar QR</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="qr-container">
-  <h2>Generador de Código QR</h2>
-  <p>Presiona el botón para generar tu código QR.</p>
-
+  <app-header></app-header>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button [routerLink]="['/qr']">
+    <ion-fab-button (click)="generarQR('tuAsignaturaId')">
       <ion-icon name="qr-code"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <div class="qr-dialog">
+    <h3 class="asistencia-titulo">Asistencia de Clase</h3>
+  </div>
+
+  <div class="qr-wrapper">
+    <canvas #qrCanvas></canvas>
+  </div>
+
+  <app-footer></app-footer>
 </ion-content>

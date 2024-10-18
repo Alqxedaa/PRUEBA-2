@@ -1,18 +1,23 @@
 <div class="cabecera" [ngClass]="{'iniciado': usuario !== ''}">
-  <h1>APP</h1>
-  <ng-container *ngIf="usuario !== ''">
-    <p>
-      Usuario: {{usuario}} - {{usuarioCompleto.rol}}
+  <!-- Título de la Institución a la izquierda -->
+  <div class="institucion">
+    <h1>Institución</h1>
+  </div>
+
+  <!-- Título de la Sección centrado, solo aparece si el usuario está logueado -->
+  <div class="seccion-titulo" *ngIf="usuario !== ''">
+    <h1>Sección Actual</h1>
+  </div>
+
+  <!-- Información del Usuario a la derecha, solo si el usuario está logueado -->
+  <div class="usuario-info" *ngIf="usuario !== ''">
+    <p class="logout">
+      <a (click)="logout()">Logout</a>
     </p>
-    <p><a (click)="logout()">Logout</a></p> <!-- Llamar al método logout -->
-    <ng-container *ngIf="usuarioCompleto.rol === 'docente'">
-      <p><a [routerLink]="['/seccion-docente']">Docente</a></p>
-    </ng-container>
-    <ng-container *ngIf="usuarioCompleto.rol !== 'docente'">
-      <p><a [routerLink]="['/seccion-alumno']">Alumno</a></p>
-    </ng-container>
-  </ng-container>
-  <ng-container *ngIf="usuario === ''">
-    <p><a [routerLink]="['/login']">Login</a></p>
-  </ng-container>
+  </div>
+</div>
+
+<!-- Mensaje de bienvenida debajo del header -->
+<div class="bienvenida-container" *ngIf="usuario !== ''">
+  <p>Bienvenido: {{usuario}} - {{usuarioCompleto.rol}}</p>
 </div>

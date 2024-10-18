@@ -1,36 +1,29 @@
 .cabecera {
-  background-color: #f8f9fa; // Color de fondo claro
-  padding: 10px 20px; // Espaciado alrededor del contenido
-  display: flex; // Usar flexbox para alinear elementos
-  justify-content: space-between; // Espacio entre el título y los enlaces
-  align-items: center; // Centrar verticalmente los elementos
-  border-bottom: 1px solid #e0e0e0; // Línea en la parte inferior
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra sutil para dar profundidad
-
-  h1 {
-    font-size: 1.5rem; // Tamaño de fuente más pequeño
-    margin: 0; // Sin margen
-    color: #343a40; // Color del texto
-  }
-
-  p {
-    margin: 0; // Sin margen
-    font-size: 1rem; // Tamaño de fuente para el texto adicional
-    color: #495057; // Color del texto adicional
-  }
-
-  a {
-    text-decoration: none; // Sin subrayado en los enlaces
-    color: #007bff; // Color del enlace
-    transition: color 0.3s; // Transición suave para el color
-
-    &:hover {
-      color: #0056b3; // Color del enlace al pasar el mouse
-    }
-  }
+  background-color: #5cc8de;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px; /* Altura reducida para pantallas móviles */
+  border-bottom: 1px solid #e0e0e0;
 }
 
-// Estilos para cuando el usuario está logueado
-.iniciado {
-  background-color: #e9ecef; // Color de fondo diferente cuando el usuario está logueado
+.institucion h1, .seccion-titulo h1 {
+  font-size: 1.2rem; /* Ajustar el tamaño del título */
+  margin: 0;
+}
+
+.usuario-info p {
+  font-size: 0.9rem; /* Reducir tamaño del texto */
+}
+
+.bienvenida-container {
+  background-color: #cacbcd;
+  padding: 10px;
+  text-align: center;
+}
+
+.bienvenida-container p {
+  margin: 0;
+  font-size: 1rem;
 }
