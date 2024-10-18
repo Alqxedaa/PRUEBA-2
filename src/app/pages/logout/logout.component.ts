@@ -9,12 +9,12 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class LogoutComponent  implements OnInit {
 
-  private authService = inject(AuthService);  // Inyecta el servicio de autenticación
+  private authService = inject(AuthService);
 
   constructor() {}
 
   ngOnInit(): void {
-    this.authService.logout();  // Cierra la sesión
+    this.authService.logout();
   }
 
 }

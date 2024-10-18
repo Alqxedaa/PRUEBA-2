@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';  // Importa el servicio AlertController
+import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({

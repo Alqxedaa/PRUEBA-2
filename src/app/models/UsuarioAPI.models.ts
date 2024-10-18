@@ -1,4 +1,4 @@
-export interface UsuarioAPI { // Definir la interface para los usuarios de la API
+export interface UsuarioAPI {
   user: string;
   pass: string;
   name: string;

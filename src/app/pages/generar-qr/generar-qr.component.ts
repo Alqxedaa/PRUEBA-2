@@ -34,15 +34,15 @@ export class GenerarQrComponent implements OnInit, OnDestroy {
     this.showQRCode = true; // Muestra el código QR
     this.createQR(); // Genera el código QR
 
-    this.seccionSeleccionada = 'Nombre de tu sección'; // Aquí asignas el nombre de la sección seleccionada
+    this.seccionSeleccionada = 'Nombre de tu sección';
   }
 
   createQR() {
     const qr = new QRious({
       element: this.qrCanvas.nativeElement,
       value: this.qrData,
-      size: 256, // Tamaño del QR
-      level: 'M' // Nivel de corrección de errores
+      size: 256,
+      level: 'M'
     });
   }
 
